@@ -4,6 +4,15 @@
 
 ## テスト環境
 
+### bootstrap.php
+```php
+Configure::write('AppDescription', [
+    'GOOGLE_EMAIL' => 'example@gmail.com',
+    'GOOGLE_PASSWD' => 'password',
+    'ANDROID_DEVICEID' => '0000000000000000'
+]);
+```
+
 ### database.php
 ```php
 class DATABASE_CONFIG {
