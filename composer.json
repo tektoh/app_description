@@ -1,5 +1,5 @@
 {
-    "name": "tektoh/AppDescription",
+    "name": "tektoh/app_description",
     "type": "cakephp-plugin",
     "description": "CakePHP Plugin",
     "keywords": [],
