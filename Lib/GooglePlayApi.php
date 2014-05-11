@@ -17,33 +17,43 @@ class GooglePlayApi extends AppDescriptionApi
 		}
 		
 		$results = $this->parseHtml($results->body);
-		
-		debug($results);
         
         return $results;
     }
 	
-	/**
-	 * HTMLをパースします
-	 * 
-	 * @params string $text
-	 * @return array
-	 */
-	public function parseHtml($text)
-	{
-		$html = str_get_html($text);
-		$results = [];
-		$results['screenshotUrls'] = $this->getScreenshotUrls($html);
-		
-		return $results;
-	}
+    /**
+     * HTMLをパースします
+     * 
+     * @params string $text
+     * @return array
+     */
+    public function parseHtml($text)
+    {
+        $html = str_get_html($text);
+        $results = [];
+        $results['screenshotUrls'] = $this->getScreenshotUrls($html);
+        $results['trackName'] = $this->getTrackName($html);
+        $results['description'] = $this->getDescription($html);
+
+        return $results;
+    }
 	
-	protected function getScreenshotUrls($html)
-	{
-		$results = [];
-		foreach($html->find('img.full-screenshot') as $element) {
-			$results []= $element->src;
-		}
-		return $results;
-	}
+    protected function getScreenshotUrls($html)
+    {
+        $results = [];
+        foreach($html->find('img.full-screenshot') as $element) {
+           $results []= $element->src;
+        }
+        return $results;
+    }
+    
+    protected function getTrackName($html)
+    {
+        return $html->find('.document-title')[0]->plaintext;
+    }
+    
+    protected function getDescription($html)
+    {
+        return $html->find('.id-app-orig-desc')[0]->plaintext;
+    }
 }
