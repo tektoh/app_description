@@ -24,8 +24,12 @@ class AppDescriptionSource extends DataSource
 
     protected function _getVendor($url)
     {
-        // TODO URLからストアを判定する処理
-        //return 'googleplay';
-        return 'appstore';
+        if (strpos($url, "itunes.apple.com") != false) {
+            return 'appstore';
+        } else if (strpos($url, "play.google.com") != false){
+            return 'googleplay';
+        } else {
+            return false;
+        }
     }
 }
