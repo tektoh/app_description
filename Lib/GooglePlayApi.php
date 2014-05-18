@@ -34,6 +34,7 @@ class GooglePlayApi extends AppDescriptionApi
         $results['screenshotUrls'] = $this->getScreenshotUrls($html);
         $results['trackName'] = $this->getTrackName($html);
         $results['description'] = $this->getDescription($html);
+        $results['artworkUrl512'] = $this->getArtworkUrl($html, 512);
 
         return $results;
     }
@@ -55,5 +56,11 @@ class GooglePlayApi extends AppDescriptionApi
     protected function getDescription($html)
     {
         return $html->find('.id-app-orig-desc')[0]->plaintext;
+    }
+    
+    protected function getArtworkUrl($html, $size = 300)
+    {
+        $src = $html->find('.cover-image')[0]->src;
+        return preg_replace('/=w[0-9]+/', "=w{$size}", $src);
     }
 }
