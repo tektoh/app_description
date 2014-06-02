@@ -30,7 +30,7 @@ class TestsController extends AppController {
     public function index() {
         $test = $this->Test->find('first', [
             'conditions' => [
-                'url' => https://itunes.apple.com/jp/app/youtube/id544007664?mt=8'
+                'url' => 'https://itunes.apple.com/jp/app/youtube/id544007664?mt=8'
             ]
         ]);
         debug($test);
