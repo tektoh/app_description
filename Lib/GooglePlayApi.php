@@ -6,13 +6,19 @@ App::import('Vendor', 'AppDescription.simplehtmldom/simple_html_dom');
 
 class GooglePlayApi extends AppDescriptionApi
 {
+    public $http;
+    
+    public function __construct()
+    {
+        $this->http = new HttpSocket();
+    }
+    
     public function lookup($url)
     {
-        $HttpSocket = new HttpSocket();
-		$results = $HttpSocket->get($url);
+		$results = $this->http->get($url);
 		
 		if (!$results->isOk()) {
-			$this->log("GooglePlayApi::lookup: Error: {$url} {$results->reasonPhrase} {$results->body}");
+			CakeLog::error("GooglePlayApi::lookup: Error: {$url} {$results->reasonPhrase} {$results->body}");
 			return false;
 		}
 		
@@ -32,7 +38,7 @@ class GooglePlayApi extends AppDescriptionApi
         $html = str_get_html($text);
         $results = [];
         $results['screenshotUrls'] = $this->getScreenshotUrls($html);
-        $results['trackName'] = $this->getTrackName($html);
+        $results['trackName'] = trim($this->getTrackName($html));
         $results['description'] = $this->getDescription($html);
         $results['artworkUrl512'] = $this->getArtworkUrl($html, 512);
 
@@ -50,17 +56,35 @@ class GooglePlayApi extends AppDescriptionApi
     
     protected function getTrackName($html)
     {
-        return $html->find('.document-title')[0]->plaintext;
+        $e = $html->find('.document-title');
+        
+        if (!isset($e[0])) {
+            return '';
+        }
+        
+        return $e[0]->plaintext;
     }
     
     protected function getDescription($html)
     {
-        return $html->find('.id-app-orig-desc')[0]->plaintext;
+        $e = $html->find('.id-app-orig-desc');
+        
+        if (!isset($e[0])) {
+            return '';
+        }
+        
+        return $e[0]->plaintext;
     }
     
     protected function getArtworkUrl($html, $size = 300)
     {
-        $src = $html->find('.cover-image')[0]->src;
+        $e = $html->find('.cover-image');
+        
+        if (!isset($e[0])) {
+            return '';
+        }
+        
+        $src = $e[0]->src;
         return preg_replace('/=w[0-9]+/', "=w{$size}", $src);
     }
 }
