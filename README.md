@@ -2,7 +2,7 @@
 =====================================================
 
 
-## テスト環境
+## 使い方
 
 ### database.php
 ```php
@@ -28,7 +28,11 @@ class TestsController extends AppController {
         'Test',
     ];
     public function index() {
-        $test = $this->Test->find('first', 'https://itunes.apple.com/jp/app/youtube/id544007664?mt=8');
+        $test = $this->Test->find('first', [
+            'conditions' => [
+                'url' => https://itunes.apple.com/jp/app/youtube/id544007664?mt=8'
+            ]
+        ]);
         debug($test);
     }
 }

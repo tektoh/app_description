@@ -19,17 +19,28 @@ class AppDescriptionSource extends DataSource
     
     public function read(Model $model, $queryData = [], $recursive = null)
     {
-        $url = $queryData[0];
+        if (!isset($queryData['conditions'])) {
+            return [];
+        }
+        
+        if (!isset($queryData['conditions']['url'])) {
+            return [];
+        }
+        
+        $url = $queryData['conditions']['url'];
         
         foreach ($this->config as $config) {
+            if (!isset($config['host'])) {
+                continue;
+            }
             if (strpos($url, $config['host']) != false) {
                 $api = new $config['apiClass'];
                 break;
             }
         }
         if (!isset($api)) {
-            return false;
+            throw CakeException("There is no class that corresponds to {$url}");
         }
-        return $api->lookup($url);
+        return [$api->lookup($url)];
     }
 }
