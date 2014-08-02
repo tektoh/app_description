@@ -39,7 +39,7 @@ class AppDescriptionSource extends DataSource
             }
         }
         if (!isset($api)) {
-            throw CakeException("There is no class that corresponds to {$url}");
+            throw new CakeException("There is no class that corresponds to {$url}");
         }
         return [$api->lookup($url)];
     }
