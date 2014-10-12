@@ -40,7 +40,7 @@ before_script:
     }" > ../cakephp/app/Config/database.php
 
 script:
-  - ./lib/Cake/Console/cake test AppDescription AllAppDescription --stderr
+  - ./lib/Cake/Console/cake test AppDescription All --stderr
 
 notifications:
   email: false
