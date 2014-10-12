@@ -2,5 +2,5 @@
 
 abstract class AppDescriptionApi
 {
-    abstract public function lookup($url);
+  abstract public function lookup($url);
 }
