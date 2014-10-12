@@ -1,6 +1,7 @@
 アプリのストアページから情報を取ってくるCakephp のプラグイン
 =====================================================
 
+[![Build Status](https://travis-ci.org/tektoh/app_description.svg)](https://travis-ci.org/tektoh/app_description)
 
 ## 使い方
 
